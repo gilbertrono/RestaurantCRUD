@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RestaurantSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblCustomer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblItems">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tblOrderItems">
+    <Key>
+      <PropertyRef Name="OrderItemID" />
+    </Key>
+    <Property Name="OrderItemID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderID" Type="bigint" />
+    <Property Name="ItemID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="tblOrders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNo" Type="varchar" MaxLength="50" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="PMethod" Type="varchar" MaxLength="50" />
+    <Property Name="GTotal" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <Association Name="FK_tblOrderItems_tblItems">
+    <End Role="tblItems" Type="Self.tblItems" Multiplicity="0..1" />
+    <End Role="tblOrderItems" Type="Self.tblOrderItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblItems">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="tblOrderItems">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOrders_tblCustomer">
+    <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="0..1" />
+    <End Role="tblOrders" Type="Self.tblOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCustomer">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="tblOrders">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOrders_tblOrders">
+    <End Role="tblOrders" Type="Self.tblOrders" Multiplicity="1" />
+    <End Role="tblOrders1" Type="Self.tblOrders" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tblOrders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="tblOrders1">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOrders_tblOrders2">
+    <End Role="tblOrders" Type="Self.tblOrders" Multiplicity="1" />
+    <End Role="tblOrders1" Type="Self.tblOrders" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tblOrders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="tblOrders1">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RestaurantSystemModelStoreContainer">
+    <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblItems" EntityType="Self.tblItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblOrderItems" EntityType="Self.tblOrderItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblOrders" EntityType="Self.tblOrders" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblOrderItems_tblItems" Association="Self.FK_tblOrderItems_tblItems">
+      <End Role="tblItems" EntitySet="tblItems" />
+      <End Role="tblOrderItems" EntitySet="tblOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOrders_tblCustomer" Association="Self.FK_tblOrders_tblCustomer">
+      <End Role="tblCustomer" EntitySet="tblCustomer" />
+      <End Role="tblOrders" EntitySet="tblOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOrders_tblOrders" Association="Self.FK_tblOrders_tblOrders">
+      <End Role="tblOrders" EntitySet="tblOrders" />
+      <End Role="tblOrders1" EntitySet="tblOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOrders_tblOrders2" Association="Self.FK_tblOrders_tblOrders2">
+      <End Role="tblOrders" EntitySet="tblOrders" />
+      <End Role="tblOrders1" EntitySet="tblOrders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

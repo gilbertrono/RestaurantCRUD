@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RestaurantSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblItems">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tblOrderItems">
+          <Key>
+            <PropertyRef Name="OrderItemID" />
+          </Key>
+          <Property Name="OrderItemID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="bigint" />
+          <Property Name="ItemID" Type="int" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="tblOrders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNo" Type="varchar" MaxLength="50" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="PMethod" Type="varchar" MaxLength="50" />
+          <Property Name="GTotal" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <Association Name="FK_tblOrderItems_tblItems">
+          <End Role="tblItems" Type="Self.tblItems" Multiplicity="0..1" />
+          <End Role="tblOrderItems" Type="Self.tblOrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblItems">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="tblOrderItems">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrders_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="0..1" />
+          <End Role="tblOrders" Type="Self.tblOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblOrders">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrders_tblOrders">
+          <End Role="tblOrders" Type="Self.tblOrders" Multiplicity="1" />
+          <End Role="tblOrders1" Type="Self.tblOrders" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrders1">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrders_tblOrders2">
+          <End Role="tblOrders" Type="Self.tblOrders" Multiplicity="1" />
+          <End Role="tblOrders1" Type="Self.tblOrders" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrders1">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RestaurantSystemModelStoreContainer">
+          <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblItems" EntityType="Self.tblItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrderItems" EntityType="Self.tblOrderItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrders" EntityType="Self.tblOrders" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblOrderItems_tblItems" Association="Self.FK_tblOrderItems_tblItems">
+            <End Role="tblItems" EntitySet="tblItems" />
+            <End Role="tblOrderItems" EntitySet="tblOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrders_tblCustomer" Association="Self.FK_tblOrders_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomer" />
+            <End Role="tblOrders" EntitySet="tblOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrders_tblOrders" Association="Self.FK_tblOrders_tblOrders">
+            <End Role="tblOrders" EntitySet="tblOrders" />
+            <End Role="tblOrders1" EntitySet="tblOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrders_tblOrders2" Association="Self.FK_tblOrders_tblOrders2">
+            <End Role="tblOrders" EntitySet="tblOrders" />
+            <End Role="tblOrders1" EntitySet="tblOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RestaurantSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrders_tblCustomer" FromRole="tblCustomer" ToRole="tblOrders" />
+        </EntityType>
+        <EntityType Name="tblItem">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="tblOrderItems" Relationship="Self.FK_tblOrderItems_tblItems" FromRole="tblItems" ToRole="tblOrderItems" />
+        </EntityType>
+        <EntityType Name="tblOrderItem">
+          <Key>
+            <PropertyRef Name="OrderItemID" />
+          </Key>
+          <Property Name="OrderItemID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int64" />
+          <Property Name="ItemID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="tblItem" Relationship="Self.FK_tblOrderItems_tblItems" FromRole="tblOrderItems" ToRole="tblItems" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="PMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GTotal" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblOrders_tblCustomer" FromRole="tblOrders" ToRole="tblCustomer" />
+          <NavigationProperty Name="tblOrders1" Relationship="Self.FK_tblOrders_tblOrders" FromRole="tblOrders" ToRole="tblOrders1" />
+          <NavigationProperty Name="tblOrder1" Relationship="Self.FK_tblOrders_tblOrders" FromRole="tblOrders1" ToRole="tblOrders" />
+          <NavigationProperty Name="tblOrders11" Relationship="Self.FK_tblOrders_tblOrders2" FromRole="tblOrders" ToRole="tblOrders1" />
+          <NavigationProperty Name="tblOrder2" Relationship="Self.FK_tblOrders_tblOrders2" FromRole="tblOrders1" ToRole="tblOrders" />
+        </EntityType>
+        <Association Name="FK_tblOrders_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="0..1" />
+          <End Role="tblOrders" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblOrders">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderItems_tblItems">
+          <End Role="tblItems" Type="Self.tblItem" Multiplicity="0..1" />
+          <End Role="tblOrderItems" Type="Self.tblOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblItems">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="tblOrderItems">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrders_tblOrders">
+          <End Role="tblOrders" Type="Self.tblOrder" Multiplicity="1" />
+          <End Role="tblOrders1" Type="Self.tblOrder" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrders1">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrders_tblOrders2">
+          <End Role="tblOrders" Type="Self.tblOrder" Multiplicity="1" />
+          <End Role="tblOrders1" Type="Self.tblOrder" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrders1">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
+          <EntitySet Name="tblItems" EntityType="Self.tblItem" />
+          <EntitySet Name="tblOrderItems" EntityType="Self.tblOrderItem" />
+          <EntitySet Name="tblOrders" EntityType="Self.tblOrder" />
+          <AssociationSet Name="FK_tblOrders_tblCustomer" Association="Self.FK_tblOrders_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomers" />
+            <End Role="tblOrders" EntitySet="tblOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderItems_tblItems" Association="Self.FK_tblOrderItems_tblItems">
+            <End Role="tblItems" EntitySet="tblItems" />
+            <End Role="tblOrderItems" EntitySet="tblOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrders_tblOrders" Association="Self.FK_tblOrders_tblOrders">
+            <End Role="tblOrders" EntitySet="tblOrders" />
+            <End Role="tblOrders1" EntitySet="tblOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrders_tblOrders2" Association="Self.FK_tblOrders_tblOrders2">
+            <End Role="tblOrders" EntitySet="tblOrders" />
+            <End Role="tblOrders1" EntitySet="tblOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RestaurantSystemModelStoreContainer" CdmEntityContainer="DBModel">
+          <EntitySetMapping Name="tblCustomers">
+            <EntityTypeMapping TypeName="RestaurantSystemModel.tblCustomer">
+              <MappingFragment StoreEntitySet="tblCustomer">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblItems">
+            <EntityTypeMapping TypeName="RestaurantSystemModel.tblItem">
+              <MappingFragment StoreEntitySet="tblItems">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrderItems">
+            <EntityTypeMapping TypeName="RestaurantSystemModel.tblOrderItem">
+              <MappingFragment StoreEntitySet="tblOrderItems">
+                <ScalarProperty Name="OrderItemID" ColumnName="OrderItemID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrders">
+            <EntityTypeMapping TypeName="RestaurantSystemModel.tblOrder">
+              <MappingFragment StoreEntitySet="tblOrders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="PMethod" ColumnName="PMethod" />
+                <ScalarProperty Name="GTotal" ColumnName="GTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
